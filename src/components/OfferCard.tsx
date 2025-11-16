@@ -5,7 +5,7 @@ export const OfferCard: React.FC<{ offer: Offer }> = ({ offer }) => {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <div className="bg-white border rounded-xl p-4 mb-4 shadow-sm">
+    <div className="bg-white  component-shadow rounded-xl p-4 mb-4 ">
       <div
         className="flex items-center justify-between cursor-pointer"
         onClick={() => {

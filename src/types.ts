@@ -30,3 +30,10 @@ export enum SortBy {
   apr = "apr",
   rating = "rating",
 }
+
+export type Limits = {
+  AMOUNT_MIN: number;
+  AMOUNT_MAX: number;
+  PERIOD_MIN: number;
+  PERIOD_MAX: number;
+};

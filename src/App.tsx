@@ -1,13 +1,43 @@
 import { useOffers } from "./hooks/useOffers";
 import { OfferCard } from "./components/OfferCard";
+import { Filters } from "./components/Filters";
+import { Sorter } from "./components/Sorter";
 
 export default function App() {
-  const { filteredOffers, loading, error, load } = useOffers();
+  const {
+    filteredOffers,
+    loading,
+    error,
+    load,
+    amount,
+    setAmount,
+    period,
+    setPeriod,
+    sortBy,
+    setSortBy,
+    tags,
+    setTags,
+    allTags,
+    limits,
+  } = useOffers();
 
   return (
-    <div className="min-h-[101vh] bg-gray-50">
-      <div className="max-w-3xl mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold mb-4">Ranking ofert</h1>
+    <div className="min-h-[101vh] bg-background">
+      <div className="max-w-6xl mx-auto px-4 py-8">
+        <h1 className="text-4xl font-bold mb-6">Ranking pożyczek</h1>
+
+        <Filters
+          amount={amount}
+          setAmount={setAmount}
+          allTags={allTags}
+          tags={tags}
+          setTags={setTags}
+          period={period}
+          setPeriod={setPeriod}
+          limits={limits}
+        />
+
+        <Sorter setSort={setSortBy} sort={sortBy} />
 
         {loading && (
           <div className="space-y-3">
