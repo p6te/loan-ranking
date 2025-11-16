@@ -53,7 +53,7 @@ summary,
   border: 1px solid transparent;
 }
 
-a:focus-visible,
+/* a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 select:focus-visible,
@@ -67,9 +67,9 @@ summary:focus-visible,
   transition:
     box-shadow 0.12s ease,
     border-color 0.12s ease;
-}
+} */
 
-.icon-like:focus-visible,
+/* .icon-like:focus-visible,
 .small-action:focus-visible {
   box-shadow: 0 0 0 3px rgb(var(--focus-rgb) / 0.14);
 }
@@ -78,7 +78,7 @@ summary:focus-visible,
   outline: none;
   box-shadow: 0 0 0 4px rgb(var(--focus-rgb) / 0.14);
   border-color: var(--color-focus);
-}
+} */
 input[type="number"].no-spinner::-webkit-inner-spin-button,
 input[type="number"].no-spinner::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -147,11 +147,11 @@ input[type="number"].no-spinner {
   transition: transform 0.12s ease;
 }
 
-.input-range:focus {
+/* .input-range:focus {
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
 }
 
 .input-range:focus-visible {
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
-}
+} */
 /* InputRange  */

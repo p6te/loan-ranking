@@ -82,8 +82,7 @@ export const Filters: React.FC<Props> = ({
                 key={tag}
                 type="button"
                 onClick={() => toggleTag(tag)}
-                className={`px-3 py-1 rounded-full cursor-pointer border text-sm outline-none
-    focus:outline-none focus:ring-2 focus:ring-focus focus:ring-offset-1 transition-shadow
+                className={`px-3 py-1 rounded-full cursor-pointer border text-sm outline-none transition-shadow
     ${
       isSelected
         ? "bg-secondary text-white border-secondary hover:bg-secondary-hover"

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import type { Offer } from "../types";
+import { logEvent } from "../lib/logEvent";
 import ArrowIcon from "../assets/icons/arrow.svg?react";
 import OfferDetails from "./OfferDetaiils";
 import { screens, useMediaQuery } from "../hooks/useMediaQuery";
@@ -47,6 +48,7 @@ export const OfferCard: React.FC<{ offer: Offer; number: number }> = ({
             <button
               onClick={(e) => {
                 e.stopPropagation();
+                logEvent("cta_click", { id: offer.id, name: offer.name });
                 setTimeout(
                   () => alert(`Przekierowano do partnera: ${offer.name}`),
                   600,
@@ -63,6 +65,7 @@ export const OfferCard: React.FC<{ offer: Offer; number: number }> = ({
         <button
           onClick={(e) => {
             e.stopPropagation();
+            logEvent("cta_click", { id: offer.id, name: offer.name });
             setTimeout(
               () => alert(`Przekierowano do partnera: ${offer.name}`),
               600,
@@ -121,6 +124,7 @@ export const OfferCard: React.FC<{ offer: Offer; number: number }> = ({
         className="border-t border-primary flex justify-center items-center pt-3 gap-2 hover:cursor-pointer"
         onClick={() => {
           setOpen((s) => !s);
+          logEvent("expand_offer", { id: offer.id });
         }}
       >
         <span>{open ? "Zwiń szczegóły" : "Pokaż szczegóły"}</span>

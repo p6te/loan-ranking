@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { logEvent } from "../lib/logEvent";
 import { SortBy, type Offer } from "../types";
 import { fetchOffers } from "../api/offersApi";
 
@@ -97,6 +98,7 @@ export function useOffers() {
   useEffect(() => {
     if (logTimerRef.current) window.clearTimeout(logTimerRef.current);
     logTimerRef.current = window.setTimeout(() => {
+      logEvent("filter_change", { amount, period, tags });
       logTimerRef.current = null;
     }, FILTER_CHANGE_DEBOUNCE);
     return () => {
@@ -106,6 +108,10 @@ export function useOffers() {
       }
     };
   }, [amount, period, tags]);
+
+  useEffect(() => {
+    logEvent("sort_change", { sortBy });
+  }, [sortBy]);
 
   return {
     filteredOffers,
