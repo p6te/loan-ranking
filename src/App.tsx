@@ -24,7 +24,9 @@ export default function App() {
   return (
     <div className="min-h-[101vh] bg-background">
       <div className="max-w-5xl mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-6">Ranking pożyczek</h1>
+        <h1 className="text-4xl font-bold mb-6" data-testid="title">
+          Ranking pożyczek
+        </h1>
 
         <Filters
           amount={amount}

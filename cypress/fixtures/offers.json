@@ -1,0 +1,41 @@
+[
+  {
+    "id": "f396ebe72f",
+    "name": "NetGotowka",
+    "logo": "https://wniosek.tarata.pl/assets/img/Netgotowka.png",
+    "apr": 84.0,
+    "minAmount": 200,
+    "maxAmount": 5000,
+    "minPeriod": 4,
+    "maxPeriod": 4,
+    "decision": "online",
+    "tags": ["chwilówka", "krótkoterminowa"],
+    "rating": 62
+  },
+  {
+    "id": "4381492dd7",
+    "name": "PozyczkaPlus",
+    "logo": "https://wniosek.tarata.pl/assets/img/Pozyczkaplus.png",
+    "apr": 89.9,
+    "minAmount": 200,
+    "maxAmount": 6000,
+    "minPeriod": 1,
+    "maxPeriod": 1,
+    "decision": "online",
+    "tags": ["chwilówka", "30 dni"],
+    "rating": 71
+  },
+  {
+    "id": "52187fab9b",
+    "name": "NetCredit",
+    "logo": "https://wniosek.tarata.pl/assets/img/Netcredit.png",
+    "apr": 97.8,
+    "minAmount": 200,
+    "maxAmount": 10000,
+    "minPeriod": 1,
+    "maxPeriod": 1,
+    "decision": "online",
+    "tags": ["chwilówka", "30 dni"],
+    "rating": 72
+  }
+]
