@@ -6,15 +6,13 @@ interface SorterProps {
 }
 export const Sorter = ({ sort, setSort }: SorterProps) => {
   return (
-    <div className="flex items-center gap-3 mb-4">
-      <span className="text-sm text-gray-600">Sortuj:</span>
+    <div className="flex items-center gap-3 ">
+      <span className="text-sm ">Sortuj:</span>
 
       <button
         onClick={() => setSort(SortBy.apr)}
-        className={`px-3 py-1 rounded-lg border  cursor-pointer ${
-          sort === "apr"
-            ? "bg-secondary text-white border-secondary hover:bg-secondary-hover"
-            : "bg-background text-gray-800 border-primary-hover hover:border-secondary"
+        className={`px-3 py-1 rounded-lg  border-2  cursor-pointer bg-background ${
+          sort === "apr" ? "  border-secondary " : "  border-primary-hover "
         }`}
       >
         RRSO rosnąco
@@ -22,10 +20,8 @@ export const Sorter = ({ sort, setSort }: SorterProps) => {
 
       <button
         onClick={() => setSort(SortBy.rating)}
-        className={`px-3 py-1 rounded-lg border  cursor-pointer ${
-          sort === "rating"
-            ? "bg-secondary text-white border-secondary hover:bg-secondary-hover"
-            : "bg-background text-gray-800 border-primary-hover hover:border-secondary"
+        className={`px-3 py-1 rounded-lg border-2  cursor-pointer ${
+          sort === "rating" ? "  border-secondary " : "  border-primary-hover "
         }`}
       >
         Ocena malejąco

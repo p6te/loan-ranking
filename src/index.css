@@ -25,7 +25,7 @@
 
 @theme {
   --color-background: var(--background-color);
-  --color-background-component: var(--background-color);
+  --color-background-component: var(--background-component);
   --color-text: var(--text-color);
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
@@ -114,12 +114,12 @@ input[type="number"].no-spinner {
 .input-range::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 20px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: var(--background-color);
   border: 3px solid var(--secondary-hover);
-  margin-top: -7px;
+  margin-top: -12px;
   box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.12);
   transition: transform 0.12s ease;
 }
@@ -137,11 +137,11 @@ input[type="number"].no-spinner {
 }
 
 .input-range::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: var(--background-color);
-
+  margin-top: -12px;
   border: 3px solid 20px;
   box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.12);
   transition: transform 0.12s ease;

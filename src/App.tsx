@@ -23,7 +23,7 @@ export default function App() {
 
   return (
     <div className="min-h-[101vh] bg-background">
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="max-w-5xl mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold mb-6">Ranking pożyczek</h1>
 
         <Filters
@@ -37,7 +37,15 @@ export default function App() {
           limits={limits}
         />
 
-        <Sorter setSort={setSortBy} sort={sortBy} />
+        <div className="flex flex-col md:flex-row md:items-center mb-4  gap-3 justify-between mx-3">
+          <div>
+            <span className="text mr-2">Liczba znalezionych ofert:</span>
+            <strong className=" text-xl font-bold">
+              {filteredOffers.length}
+            </strong>
+          </div>
+          <Sorter setSort={setSortBy} sort={sortBy} />
+        </div>
 
         {loading && (
           <div className="space-y-3">
@@ -57,7 +65,9 @@ export default function App() {
         )}
         {!loading &&
           !error &&
-          filteredOffers.map((o) => <OfferCard key={o.id} offer={o} />)}
+          filteredOffers.map((o, index) => (
+            <OfferCard key={o.id} number={index + 1} offer={o} />
+          ))}
       </div>
     </div>
   );

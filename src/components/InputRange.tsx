@@ -1,12 +1,12 @@
 import React from "react";
 
 type Props = {
-  id?: string;
+  id: string;
   ariaLabel?: string;
   min: number;
   max: number;
   step?: number;
-  value: number | string;
+  value: string | number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onPointerDown?: (e: React.PointerEvent<HTMLInputElement>) => void;
   onPointerUp?: (e: React.PointerEvent<HTMLInputElement>) => void;

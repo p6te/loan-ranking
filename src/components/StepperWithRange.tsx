@@ -10,6 +10,7 @@ type Props = {
   step: number;
   onChange: (value: number) => void;
   debounceMs?: number;
+  withRange?: boolean;
 };
 
 export const StepperWithRange: React.FC<Props> = ({
@@ -21,6 +22,7 @@ export const StepperWithRange: React.FC<Props> = ({
   step = 1,
   onChange,
   debounceMs = 150,
+  withRange,
 }) => {
   const clamp = (v: number) => Math.min(max, Math.max(min, v));
   const roundToStep = (v: number) => Math.round(v / step) * step;
@@ -104,11 +106,33 @@ export const StepperWithRange: React.FC<Props> = ({
     }, debounceMs);
   };
 
-  const onPointerDown = (_e: React.PointerEvent<HTMLInputElement>) => {
+  const onPointerDown = () => {
     setIsDragging(true);
   };
 
-  const onPointerUp = (_e: React.PointerEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    const finishDrag = () => {
+      if (debounceRef.current) {
+        window.clearTimeout(debounceRef.current);
+        debounceRef.current = null;
+      }
+      const parsed = Number(local);
+      if (!Number.isNaN(parsed)) commitValue(parsed);
+      setIsDragging(false);
+    };
+
+    window.addEventListener("pointerup", finishDrag);
+    window.addEventListener("touchend", finishDrag);
+    window.addEventListener("mouseup", finishDrag);
+
+    return () => {
+      window.removeEventListener("pointerup", finishDrag);
+      window.removeEventListener("touchend", finishDrag);
+      window.removeEventListener("mouseup", finishDrag);
+    };
+  }, [local, value]);
+
+  const onPointerUpLocal = () => {
     if (debounceRef.current) {
       window.clearTimeout(debounceRef.current);
       debounceRef.current = null;
@@ -124,22 +148,21 @@ export const StepperWithRange: React.FC<Props> = ({
     if (!Number.isNaN(parsed)) {
       return String(clamp(roundToStep(parsed)));
     }
-
     return String(value);
   })();
 
   return (
     <div className="flex flex-col">
-      <div className="flex items-center gap-2 justify-between">
+      <div className="flex flex-col md:flex-row md:items-center gap-2 justify-between">
         <label htmlFor={id} className="text-xl font-medium">
           {label}
         </label>
-        <div className="flex items-center border border-primary rounded-[9px] ">
+        <div className="flex items-center border border-primary rounded-[9px] max-w-[400px]  ">
           <button
             type="button"
             onClick={dec}
             aria-label={`Zmniejsz ${label ?? "wartość"}`}
-            className="px-5 py-2 bg-primary hover:bg-primary-hover disabled:opacity-70 font-extrabold  disabled:cursor-not-allowed disabled:hover:bg-primary rounded-l-lg  cursor-pointer"
+            className="px-5 py-2 bg-primary hover:bg-primary-hover disabled:opacity-70 font-extrabold rounded-l-lg cursor-pointer"
             disabled={value - step < min}
           >
             −
@@ -147,7 +170,7 @@ export const StepperWithRange: React.FC<Props> = ({
 
           <input
             id={id}
-            className="no-spinner  text-xl text-center focus:outline-none"
+            className="no-spinner text-xl text-center focus:outline-none flex-1 flex  min-w-[100px]"
             type="number"
             inputMode="numeric"
             value={local}
@@ -167,7 +190,7 @@ export const StepperWithRange: React.FC<Props> = ({
             type="button"
             onClick={inc}
             aria-label={`Zwiększ ${label ?? "wartość"}`}
-            className="px-5 py-2 bg-primary hover:bg-primary-hover disabled:opacity-70 font-extrabold  disabled:cursor-not-allowed disabled:hover:bg-primary focus:outline-none focus:ring-2 rounded-r-lg focus:ring-blue-400 cursor-pointer"
+            className="px-5 py-2 bg-primary hover:bg-primary-hover disabled:opacity-70 font-extrabold rounded-r-lg cursor-pointer"
             disabled={value + step > max}
           >
             +
@@ -175,24 +198,28 @@ export const StepperWithRange: React.FC<Props> = ({
         </div>
       </div>
 
-      <div className="mt-3 slider">
-        <InputRange
-          id={id}
-          ariaLabel={label ?? "slider"}
-          min={min}
-          max={max}
-          step={step}
-          value={rangeValue}
-          onChange={onRangeChange}
-          onPointerDown={onPointerDown}
-          onPointerUp={onPointerUp}
-        />
+      {withRange && (
+        <div className="mt-5 slider">
+          <InputRange
+            id={id}
+            ariaLabel={label ?? "slider"}
+            min={min}
+            max={max}
+            step={step}
+            value={rangeValue}
+            onChange={onRangeChange}
+            onPointerDown={onPointerDown}
+            onPointerUp={onPointerUpLocal}
+          />
 
-        <div className="flex justify-between text-sm text-gray-500 mt-1">
-          <span>{min}</span>
-          <span>{max}</span>
+          <div className="flex justify-between text-sm text-gray-500 mt-1">
+            <span>{min}</span>
+            <span>{max}</span>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
+
+export default StepperWithRange;

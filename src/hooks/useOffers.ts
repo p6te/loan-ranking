@@ -20,6 +20,7 @@ export function useOffers() {
     try {
       const data = await fetchOffers();
       setOffers(data);
+      logEvent("view_list", { count: data.length });
     } catch (e: any) {
       setError(e?.message ?? "Error");
     } finally {
