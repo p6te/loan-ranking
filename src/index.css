@@ -41,30 +41,16 @@ body {
   color: var(--text-color);
 }
 
-a,
-button,
-input,
-select,
-textarea,
-summary,
-[role="button"],
-[tabindex]:not([tabindex="-1"]) {
-  box-sizing: border-box;
-  transition:
-    box-shadow 160ms ease,
-    border-color 120ms ease;
-  will-change: box-shadow;
-}
-
-a,
-button,
-input,
-select,
-textarea,
-summary,
-[role="button"],
-[tabindex]:not([tabindex="-1"]) {
-  box-sizing: border-box;
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus,
+summary:focus,
+[role="button"]:focus,
+[tabindex]:not([tabindex="-1"]):focus {
+  outline: none;
+  box-shadow: none;
 }
 
 a:focus-visible,

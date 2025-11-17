@@ -15,13 +15,15 @@ export function useOffers() {
   const [sortBy, setSortBy] = useState<SortBy>(SortBy.apr);
   const [tags, setTags] = useState<string[]>([]);
 
+  const isInitialFilterRef = useRef(true);
+  const isInitialSortRef = useRef(true);
+
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
       const data = await fetchOffers();
       setOffers(data);
-      logEvent("view_list", { count: data.length });
     } catch (e: any) {
       setError(e?.message ?? "Error");
     } finally {
@@ -57,11 +59,17 @@ export function useOffers() {
   const logTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
+    if (isInitialFilterRef.current) {
+      isInitialFilterRef.current = false;
+      return;
+    }
+
     if (logTimerRef.current) window.clearTimeout(logTimerRef.current);
     logTimerRef.current = window.setTimeout(() => {
       logEvent("filter_change", { amount, period, tags });
       logTimerRef.current = null;
     }, FILTER_CHANGE_DEBOUNCE);
+
     return () => {
       if (logTimerRef.current) {
         window.clearTimeout(logTimerRef.current);
@@ -71,6 +79,11 @@ export function useOffers() {
   }, [amount, period, tags]);
 
   useEffect(() => {
+    if (isInitialSortRef.current) {
+      isInitialSortRef.current = false;
+      return;
+    }
+
     logEvent("sort_change", { sortBy });
   }, [sortBy]);
 
