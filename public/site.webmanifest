@@ -1,0 +1,12 @@
+{
+  "name": "Ranking pożyczek",
+  "short_name": "Ranking pożyczek",
+  "description": "Mini ranking ofert — porównaj pożyczki krótkoterminowe i ratalne.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#3c6e71",
+  "icons": []
+}
