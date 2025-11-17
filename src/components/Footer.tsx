@@ -3,6 +3,7 @@ import React from "react";
 export const Footer: React.FC = () => {
   return (
     <footer
+      aria-label="Stopka serwisu"
       role="contentinfo"
       className="mt-8 py-6 bg-background-component border border-primary rounded-t-2xl "
     >
@@ -11,15 +12,20 @@ export const Footer: React.FC = () => {
           Projekt demonstracyjny — Mini ranking ofert. ©{" "}
           {new Date().getFullYear()} Piotr Matlak
         </p>
-        <p className="mt-2">
-          <a href="/privacy" className="underline">
+
+        <nav aria-label="Dodatkowe linki stopki" className="mt-2">
+          <a
+            href="/privacy"
+            className="underline"
+            aria-label="Polityka prywatności"
+          >
             Polityka prywatności
           </a>{" "}
           ·{" "}
-          <a href="/terms" className="underline">
+          <a href="/terms" className="underline" aria-label="Regulamin serwisu">
             Regulamin
           </a>
-        </p>
+        </nav>
       </div>
     </footer>
   );

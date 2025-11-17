@@ -1,3 +1,5 @@
+import React from "react";
+
 type OfferDetailsProps = {
   name: string;
   value: string;
@@ -13,10 +15,22 @@ const OfferDetails: React.FC<OfferDetailsProps> = ({
 }) => {
   return (
     <div
-      className={`flex-1 flex md:flex-col flex-row justify-between md:justify-center ml-3 p-1 md:p-0 ${separator ? (isSm ? "border-b" : "border-r") : ""} border-primary`}
+      role="group"
+      className={`flex-1 flex md:flex-col flex-row justify-between md:justify-center ml-3 p-1 md:p-0 ${
+        separator ? (isSm ? "border-b" : "border-r") : ""
+      } border-primary`}
     >
-      <span className="inline-block">{name}</span>
-      <strong className="inline-block font-bold">{value}</strong>
+      <span className="sr-only">{name}</span>
+
+      <span className="inline-block" aria-hidden="true">
+        {name}
+      </span>
+      <strong
+        className="inline-block font-bold"
+        aria-label={`${name}: ${value}`}
+      >
+        {value}
+      </strong>
     </div>
   );
 };

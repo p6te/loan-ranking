@@ -41,59 +41,86 @@ export const Filters: React.FC<Props> = ({
   };
 
   return (
-    <div className="bg-background-component  p-4 rounded-xl shadow-sm mb-6 border border-primary">
+    <section
+      aria-labelledby="filters-heading"
+      className="bg-background-component  p-4 rounded-xl shadow-sm mb-6 border border-primary"
+    >
       <div className="flex flex-col md:flex-row justify-between gap-8 lg:gap-32 md:gap-16">
-        <h2 className="text-2xl font-semibold md:mb-8 mt-3">
+        <h2
+          id="filters-heading"
+          className="text-2xl font-semibold md:mb-8 mt-3"
+        >
           Dopasuj najlepszą ofertę
         </h2>
-        <div className="flex flex-col gap-6 flex-1">
-          <StepperWithRange
-            id="amount"
-            label="Kwota (zł)"
-            value={amount}
-            min={200}
-            step={amountStep}
-            onChange={setAmount}
-            roundValue={100}
-          />
 
-          <StepperWithRange
-            id="period"
-            label="Okres (mies.)"
-            value={period}
-            min={1}
-            max={60}
-            step={1}
-            onChange={setPeriod}
-            withRange
-            roundValue={1}
-          />
+        <div className="flex flex-col gap-6 flex-1" aria-hidden={loading}>
+          <fieldset aria-labelledby="amount-label" className="m-0 p-0">
+            <StepperWithRange
+              id="amount"
+              label="Kwota (zł)"
+              value={amount}
+              min={200}
+              step={amountStep}
+              onChange={setAmount}
+              roundValue={100}
+            />
+          </fieldset>
+
+          <fieldset aria-labelledby="period-label" className="m-0 p-0">
+            <StepperWithRange
+              id="period"
+              label="Okres (mies.)"
+              value={period}
+              min={1}
+              max={60}
+              step={1}
+              onChange={setPeriod}
+              withRange
+              roundValue={1}
+            />
+          </fieldset>
         </div>
       </div>
-      <div className="md:col-span-2">
-        <label className="text-sm font-medium ">Filtry</label>
-        <div className="flex flex-wrap gap-2 mt-2">
+
+      <div className="md:col-span-2 ">
+        <label id="tags-label" className="text-sm font-medium">
+          Filtry
+        </label>
+
+        <div
+          className="flex flex-wrap gap-2 mt-2"
+          role="region"
+          aria-labelledby="tags-label"
+        >
           {!loading ? (
-            allTags.map((tag) => {
-              const isSelected = tags.includes(tag);
-              return (
-                <button
-                  key={tag}
-                  type="button"
-                  onClick={() => toggleTag(tag)}
-                  className={`px-3 py-1 rounded-full cursor-pointer border text-sm outline-none transition-shadow
-    ${
-      isSelected
-        ? "bg-secondary text-white border-secondary hover:bg-secondary-hover"
-        : "bg-background border-primary-hover hover:border-secondary"
-    }`}
-                  aria-pressed={isSelected}
-                  aria-label={`${isSelected ? "Usuń" : "Dodaj"} tag ${tag}`}
-                >
-                  {tag}
-                </button>
-              );
-            })
+            <ul
+              role="list"
+              className="flex flex-wrap gap-2 m-0 p-0 list-none"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              {allTags.map((tag) => {
+                const isSelected = tags.includes(tag);
+                return (
+                  <li key={tag} role="listitem" className="m-0">
+                    <button
+                      type="button"
+                      onClick={() => toggleTag(tag)}
+                      className={`px-3 py-1 rounded-full cursor-pointer border text-sm outline-none transition-shadow
+        ${
+          isSelected
+            ? "bg-secondary text-white border-secondary hover:bg-secondary-hover"
+            : "bg-background border-primary-hover hover:border-secondary"
+        }`}
+                      aria-pressed={isSelected}
+                      aria-label={`${isSelected ? "Usuń filtr" : "Dodaj filtr"}: ${tag}`}
+                    >
+                      {tag}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
           ) : (
             <>
               {Array.from({ length: 10 }).map((_, i) => {
@@ -107,6 +134,7 @@ export const Filters: React.FC<Props> = ({
                     key={i}
                     style={{ width: `${width}px` }}
                     className="h-[30px] rounded-full bg-gray-200 animate-pulse"
+                    aria-hidden="true"
                   />
                 );
               })}
@@ -114,6 +142,6 @@ export const Filters: React.FC<Props> = ({
           )}
         </div>
       </div>
-    </div>
+    </section>
   );
 };

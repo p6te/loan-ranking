@@ -24,30 +24,44 @@ export const OfferCard = ({ offer, number }: Props) => {
   }, []);
 
   return (
-    <div className="bg-white border-primary border   component-shadow rounded-xl p-4 mb-4 ">
+    <div
+      aria-labelledby={`offer-name-${offer.id}`}
+      className="bg-white border-primary border component-shadow rounded-xl p-4 mb-4 "
+    >
       <div className="relative flex items-center justify-center md:justify-between ">
         <div className=" flex items-center ">
           {!isSm && (
-            <span className="  left-0 text-xl w-3 md:text-3xl font-bold ml-1 md:ml-2 text-secondary z-10">
+            <span
+              className="left-0 text-xl w-3 md:text-3xl font-bold ml-1 md:ml-2 text-secondary z-10"
+              aria-hidden="true"
+            >
               {number}
             </span>
           )}
+
           <div className="flex items-center gap-5">
             <img
               src={offer.logo}
               alt={offer.name}
-              className="w-auto h-full object-contain min-h-20 mb-1 md:mb-0  ml-6"
+              loading="lazy"
+              className="w-auto h-full object-contain min-h-20 mb-1 md:mb-0 ml-6"
             />
           </div>
+
           {!isSm && (
-            <strong className="font-semibold text-xl mdtext-3xl">
+            <h3
+              id={`offer-name-${offer.id}`}
+              className="font-semibold text-xl mdtext-3xl ml-3"
+            >
               {offer.name}
-            </strong>
+            </h3>
           )}
         </div>
+
         <div className="justify-between flex gap-3 flex-wrap">
           {!isSm && (
             <button
+              type="button"
               onClick={(e) => {
                 e.stopPropagation();
                 logEvent("cta_click", { id: offer.id, name: offer.name });
@@ -56,15 +70,18 @@ export const OfferCard = ({ offer, number }: Props) => {
                   600,
                 );
               }}
-              className=" py-2 px-4 rounded-xl bg-secondary text-white cursor-pointer hover:bg-secondary-hover text-nowrap"
+              className="py-2 px-4 rounded-xl bg-secondary text-white cursor-pointer hover:bg-secondary-hover text-nowrap"
+              aria-label={`Sprawdź ofertę: ${offer.name}`}
             >
               Sprawdź ofertę
             </button>
           )}
         </div>
       </div>
+
       {isSm && (
         <button
+          type="button"
           onClick={(e) => {
             e.stopPropagation();
             logEvent("cta_click", { id: offer.id, name: offer.name });
@@ -73,7 +90,8 @@ export const OfferCard = ({ offer, number }: Props) => {
               600,
             );
           }}
-          className=" py-2 px-4 mb-3  w-full rounded-xl bg-secondary text-white cursor-pointer hover:bg-secondary-hover text-nowrap"
+          className="py-2 px-4 mb-3 w-full rounded-xl bg-secondary text-white cursor-pointer hover:bg-secondary-hover text-nowrap"
+          aria-label={`Sprawdź ofertę: ${offer.name}`}
         >
           Sprawdź ofertę
         </button>
@@ -122,17 +140,20 @@ export const OfferCard = ({ offer, number }: Props) => {
         />
         <OfferDetails name="Ocena" value={`${offer.rating}/100`} />
       </div>
-      <div className="border-t border-primary flex justify-center items-center py-3 gap-2  flex-wrap">
-        {offer.tags.map((t) => {
-          return (
-            <span
-              key={t}
-              className="px-3 py-1 rounded-full text-sm bg-background border border-primary-hover  "
-            >
-              {t}
-            </span>
-          );
-        })}
+
+      <div
+        className="border-t border-primary flex justify-center items-center py-3 gap-2 flex-wrap"
+        aria-hidden={offer.tags.length === 0}
+      >
+        {offer.tags.map((t) => (
+          <span
+            key={t}
+            className="px-3 py-1 rounded-full text-sm bg-background border border-primary-hover"
+            aria-label={"tag - " + t}
+          >
+            {t}
+          </span>
+        ))}
       </div>
       <div
         className="border-t border-primary flex justify-center items-center pt-3 gap-2 hover:cursor-pointer"
@@ -170,3 +191,5 @@ export const OfferCard = ({ offer, number }: Props) => {
     </div>
   );
 };
+
+export default OfferCard;
