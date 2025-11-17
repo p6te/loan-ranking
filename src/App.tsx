@@ -74,7 +74,7 @@ export default function App() {
           {error && <ErrorState load={load} />}
 
           {!loading && !error && (
-            <>
+            <div className="w-full">
               {filteredOffers.length === 0 ? (
                 <div
                   className="flex flex-col justify-center items-center w-full mt-16 text-2xl text-center"
@@ -103,7 +103,7 @@ export default function App() {
                   ))}
                 </ol>
               )}
-            </>
+            </div>
           )}
         </main>
 

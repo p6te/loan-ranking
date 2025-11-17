@@ -21,7 +21,7 @@ export const ErrorState: React.FC<ErrorStateProps> = ({ load }) => {
       <button
         type="button"
         onClick={load}
-        className="px-4 py-3 text-xl text-white bg-secondary rounded-xl hover:cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(56,215,255,0.14)]"
+        className="px-4 py-3 text-xl text-white bg-secondary rounded-xl hover:cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(56,215,255,0.14)] max-w-40"
         aria-label="Pobierz oferty ponownie"
         data-testid="retry-button"
       >
