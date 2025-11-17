@@ -44,7 +44,7 @@ export const OfferCard = ({ offer, number }: Props) => {
               src={offer.logo}
               alt={offer.name}
               loading="lazy"
-              className="w-auto h-full object-contain min-h-20 mb-1 md:mb-0 ml-6"
+              className="w-auto h-full object-contain min-h-20 mb-1 md:mb-0 md:ml-6"
             />
           </div>
 
