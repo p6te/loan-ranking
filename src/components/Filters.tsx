@@ -43,7 +43,7 @@ export const Filters: React.FC<Props> = ({
   return (
     <section
       aria-labelledby="filters-heading"
-      className="bg-background-component  p-4 rounded-xl shadow-sm mb-6 border border-primary"
+      className="bg-background-component  p-4 rounded-xl shadow-sm mb-6 border border-primary flex-col flex grow"
     >
       <div className="flex flex-col md:flex-row justify-between gap-8 lg:gap-32 md:gap-16">
         <h2
