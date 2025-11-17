@@ -25,8 +25,8 @@ export default function App() {
   } = useOffers();
 
   return (
-    <div className="min-h-[101vh] flex flex-col bg-background">
-      <div className="max-w-5xl mx-auto px-4 pt-8 flex flex-col grow">
+    <div className="min-h-[101vh] flex flex-col bg-background w-full">
+      <div className="max-w-5xl mx-auto px-4 pt-8 flex flex-col grow w-full">
         <header>
           <h1 className="text-4xl font-bold mb-6" data-testid="title">
             Ranking pożyczek
