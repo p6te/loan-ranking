@@ -73,7 +73,6 @@ export default function App() {
 
           {error && <ErrorState load={load} />}
 
-          {/* no results / list */}
           {!loading && !error && (
             <>
               {filteredOffers.length === 0 ? (
