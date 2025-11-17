@@ -31,6 +31,10 @@ export default function App() {
           <h1 className="text-4xl font-bold mb-6" data-testid="title">
             Ranking pożyczek
           </h1>
+          <p className="sr-only">
+            Aplikacja prezentuje ranking ofert pożyczkowych, z filtrowaniem po
+            kwocie i okresie.
+          </p>
         </header>
 
         <main className="grow">
@@ -53,27 +57,55 @@ export default function App() {
             offersNumber={filteredOffers.length}
           />
 
-          {loading &&
-            mockOffers.map((o, index) => (
-              <SkeletonLoadingOffer number={index + 1} key={o.id + index} />
-            ))}
+          {loading && (
+            <ol
+              aria-live="polite"
+              className="space-y-4"
+              aria-label="Ładowanie ofert"
+            >
+              {mockOffers.map((_, index) => (
+                <li key={`skeleton-${index}`}>
+                  <SkeletonLoadingOffer number={index + 1} />
+                </li>
+              ))}
+            </ol>
+          )}
 
           {error && <ErrorState load={load} />}
 
-          {!loading &&
-            !error &&
-            (filteredOffers.length === 0 ? (
-              <div className="flex flex-col justify-center items-center w-full mt-16 text-2xl text-center">
-                <div>Nie znaleziono pasujących ofert.</div>
-                <div className="font-bold">
-                  Dopasuj filtry i spróbuj ponownine.
+          {/* no results / list */}
+          {!loading && !error && (
+            <>
+              {filteredOffers.length === 0 ? (
+                <div
+                  className="flex flex-col justify-center items-center w-full mt-16 text-2xl text-center"
+                  role="status"
+                  aria-live="polite"
+                >
+                  <div>Nie znaleziono pasujących ofert.</div>
+                  <div className="font-bold">
+                    Dopasuj filtry i spróbuj ponownie.
+                  </div>
                 </div>
-              </div>
-            ) : (
-              filteredOffers.map((o, index) => (
-                <OfferCard key={o.id} number={index + 1} offer={o} />
-              ))
-            ))}
+              ) : (
+                <ol
+                  aria-label="Ranking ofert"
+                  className="space-y-4"
+                  role="list"
+                >
+                  {filteredOffers.map((o, index) => (
+                    <li
+                      key={o.id}
+                      aria-posinset={index + 1}
+                      aria-setsize={filteredOffers.length}
+                    >
+                      <OfferCard key={o.id} number={index + 1} offer={o} />
+                    </li>
+                  ))}
+                </ol>
+              )}
+            </>
+          )}
         </main>
 
         <Footer />

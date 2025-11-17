@@ -18,8 +18,8 @@
   --secondary: #3c6e71;
   --secondary-hover: #4e8e91;
 
-  --focus: #27bbe8;
-  --focus-rgb: 56 215 255;
+  --focus: #1271ff;
+  --focus-rgb: 18, 113, 255;
   --color-focus: var(--focus);
 }
 
@@ -42,6 +42,7 @@ body {
 }
 
 a,
+button,
 input,
 select,
 textarea,
@@ -49,11 +50,24 @@ summary,
 [role="button"],
 [tabindex]:not([tabindex="-1"]) {
   box-sizing: border-box;
-
-  border: 1px solid transparent;
+  transition:
+    box-shadow 160ms ease,
+    border-color 120ms ease;
+  will-change: box-shadow;
 }
 
-/* a:focus-visible,
+a,
+button,
+input,
+select,
+textarea,
+summary,
+[role="button"],
+[tabindex]:not([tabindex="-1"]) {
+  box-sizing: border-box;
+}
+
+a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 select:focus-visible,
@@ -61,24 +75,12 @@ textarea:focus-visible,
 summary:focus-visible,
 [role="button"]:focus-visible,
 [tabindex]:not([tabindex="-1"]):focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 4px rgb(var(--focus-rgb) / 0.2);
-  border-color: var(--color-focus);
-  transition:
-    box-shadow 0.12s ease,
-    border-color 0.12s ease;
-} */
-
-/* .icon-like:focus-visible,
-.small-action:focus-visible {
-  box-shadow: 0 0 0 3px rgb(var(--focus-rgb) / 0.14);
+  outline: 4px solid var(--color-focus);
+  outline-offset: 2px;
+  position: relative;
+  z-index: 1;
 }
 
-.focus-default:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 4px rgb(var(--focus-rgb) / 0.14);
-  border-color: var(--color-focus);
-} */
 input[type="number"].no-spinner::-webkit-inner-spin-button,
 input[type="number"].no-spinner::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -147,11 +149,4 @@ input[type="number"].no-spinner {
   transition: transform 0.12s ease;
 }
 
-/* .input-range:focus {
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
-}
-
-.input-range:focus-visible {
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
-} */
 /* InputRange  */

@@ -1,20 +1,34 @@
+import React from "react";
 import NoDataImg from "../assets/icons/no-data.svg?react";
 
 interface ErrorStateProps {
   load: () => void;
 }
 
-export const ErrorState = ({ load }: ErrorStateProps) => {
+export const ErrorState: React.FC<ErrorStateProps> = ({ load }) => {
   return (
-    <div className="text-center flex-col py-10 w-full flex justify-center">
-      <NoDataImg className="w-auto h-[300px]" />
-      <p className=" my-5">Nie udało się pobrać ofert, spróbuj ponownie!</p>
+    <section
+      role="alert"
+      aria-live="polite"
+      className="text-center flex flex-col py-10 w-full justify-center items-center"
+    >
+      <NoDataImg className="w-auto h-[220px] mb-4" aria-hidden="true" />
+
+      <p className=" my-5" data-testid="error-message">
+        Nie udało się pobrać ofert — spróbuj ponownie.
+      </p>
+
       <button
+        type="button"
         onClick={load}
-        className="px-4 py-3 text-xl  text-white bg-secondary w-50 m-auto rounded-xl hover:cursor-pointer"
+        className="px-4 py-3 text-xl text-white bg-secondary rounded-xl hover:cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-[rgba(56,215,255,0.14)]"
+        aria-label="Pobierz oferty ponownie"
+        data-testid="retry-button"
       >
         Pobierz oferty
       </button>
-    </div>
+    </section>
   );
 };
+
+export default ErrorState;

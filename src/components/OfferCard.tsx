@@ -28,7 +28,7 @@ export const OfferCard = ({ offer, number }: Props) => {
       <div className="relative flex items-center justify-center md:justify-between ">
         <div className=" flex items-center ">
           {!isSm && (
-            <span className="  left-0 text-xl w-3 md:text-3xl font-bold ml-1 md:ml-2 text-secondary">
+            <span className="  left-0 text-xl w-3 md:text-3xl font-bold ml-1 md:ml-2 text-secondary z-10">
               {number}
             </span>
           )}
@@ -36,7 +36,7 @@ export const OfferCard = ({ offer, number }: Props) => {
             <img
               src={offer.logo}
               alt={offer.name}
-              className="w-auto h-full object-contain min-h-20 mb-1 md:mb-0  ml-3"
+              className="w-auto h-full object-contain min-h-20 mb-1 md:mb-0  ml-6"
             />
           </div>
           {!isSm && (
@@ -127,7 +127,7 @@ export const OfferCard = ({ offer, number }: Props) => {
           return (
             <span
               key={t}
-              className="px-3 py-1 rounded-full text-sm bg-background border border-primary-hover "
+              className="px-3 py-1 rounded-full text-sm bg-background border border-primary-hover  "
             >
               {t}
             </span>
@@ -141,7 +141,7 @@ export const OfferCard = ({ offer, number }: Props) => {
           logEvent("expand_offer", { id: offer.id });
         }}
       >
-        <span>{open ? "Zwiń szczegóły" : "Pokaż szczegóły"}</span>
+        <button>{open ? "Zwiń szczegóły" : "Pokaż szczegóły"}</button>
         <ArrowIcon
           className={`w-8 h-8 transition-transform duration-300 ${
             open ? "rotate-180" : "rotate-0"
