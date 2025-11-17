@@ -173,7 +173,7 @@ export const StepperWithRange: React.FC<Props> = ({
 
           <input
             id={id}
-            className="no-spinner text-xl text-center   flex-1 flex  min-w-[100px] max-w-[100px]"
+            className="no-spinner text-xl text-center  flex-1 flex  min-w-[100px] "
             style={{ outline: "none" }}
             type="number"
             inputMode="numeric"

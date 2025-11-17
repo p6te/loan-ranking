@@ -48,7 +48,7 @@ export default function InputRange({
       onChange={onChange}
       onPointerDown={onPointerDown}
       onPointerUp={onPointerUp}
-      className={`input-range ${className} cursor-pointer`}
+      className={`input-range ${className} cursor-pointer `}
       style={{ background }}
     />
   );
