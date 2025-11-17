@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { StepperWithRange } from "./StepperWithRange";
 
 type Props = {
@@ -9,14 +9,7 @@ type Props = {
   setAmount: (n: number) => void;
   setPeriod: (p: number) => void;
   setTags: (tags: string[]) => void;
-  limits: {
-    AMOUNT_MIN: number;
-
-    AMOUNT_MAX: number;
-
-    PERIOD_MIN: number;
-    PERIOD_MAX: number;
-  };
+  loading?: boolean;
 };
 
 export const Filters: React.FC<Props> = ({
@@ -27,15 +20,19 @@ export const Filters: React.FC<Props> = ({
   setAmount,
   setPeriod,
   setTags,
-  limits = {
-    AMOUNT_MAX: 150000,
-    AMOUNT_MIN: 100,
-    PERIOD_MAX: 60,
-    PERIOD_MIN: 1,
-  },
+  loading,
 }) => {
-  const { AMOUNT_MAX, AMOUNT_MIN, PERIOD_MAX, PERIOD_MIN } = limits;
-  const AMOUNT_STEP = 100;
+  const amountStep = useMemo(() => {
+    if (amount < 5000) {
+      return 100;
+    } else if (amount < 10000) {
+      return 200;
+    } else if (amount < 50000) {
+      return 500;
+    } else {
+      return 1000;
+    }
+  }, [amount]);
 
   const toggleTag = (tag: string) => {
     setTags(
@@ -54,47 +51,67 @@ export const Filters: React.FC<Props> = ({
             id="amount"
             label="Kwota (zł)"
             value={amount}
-            min={AMOUNT_MIN}
-            max={AMOUNT_MAX}
-            step={AMOUNT_STEP}
+            min={200}
+            step={amountStep}
             onChange={setAmount}
+            roundValue={100}
           />
 
           <StepperWithRange
             id="period"
             label="Okres (mies.)"
             value={period}
-            min={PERIOD_MIN}
-            max={PERIOD_MAX}
+            min={1}
+            max={60}
             step={1}
             onChange={setPeriod}
             withRange
+            roundValue={1}
           />
-        </div>{" "}
+        </div>
       </div>
       <div className="md:col-span-2">
-        <label className="text-sm font-medium text-gray-600">Filtry</label>
+        <label className="text-sm font-medium ">Filtry</label>
         <div className="flex flex-wrap gap-2 mt-2">
-          {allTags.map((tag) => {
-            const isSelected = tags.includes(tag);
-            return (
-              <button
-                key={tag}
-                type="button"
-                onClick={() => toggleTag(tag)}
-                className={`px-3 py-1 rounded-full cursor-pointer border text-sm outline-none transition-shadow
+          {!loading ? (
+            allTags.map((tag) => {
+              const isSelected = tags.includes(tag);
+              return (
+                <button
+                  key={tag}
+                  type="button"
+                  onClick={() => toggleTag(tag)}
+                  className={`px-3 py-1 rounded-full cursor-pointer border text-sm outline-none transition-shadow
     ${
       isSelected
         ? "bg-secondary text-white border-secondary hover:bg-secondary-hover"
-        : "bg-background text-gray-800 border-primary-hover hover:border-secondary"
+        : "bg-background border-primary-hover hover:border-secondary"
     }`}
-                aria-pressed={isSelected}
-                aria-label={`${isSelected ? "Usuń" : "Dodaj"} tag ${tag}`}
-              >
-                {tag}
-              </button>
-            );
-          })}
+                  aria-pressed={isSelected}
+                  aria-label={`${isSelected ? "Usuń" : "Dodaj"} tag ${tag}`}
+                >
+                  {tag}
+                </button>
+              );
+            })
+          ) : (
+            <>
+              {Array.from({ length: 10 }).map((_, i) => {
+                const width = Math.max(
+                  Math.min(Math.floor(Math.random() * 100 * 1.5), 130),
+                  90,
+                );
+
+                return (
+                  <div
+                    key={i}
+                    style={{ width: `${width}px` }}
+                    className="h-[30px] rounded-full bg-gray-200 animate-pulse"
+                  />
+                );
+              })}
+            </>
+          )}
         </div>
       </div>
     </div>

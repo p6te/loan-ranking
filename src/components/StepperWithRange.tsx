@@ -6,8 +6,9 @@ type Props = {
   label: string;
   value: number;
   min: number;
-  max: number;
+  max?: number;
   step: number;
+  roundValue: number;
   onChange: (value: number) => void;
   debounceMs?: number;
   withRange?: boolean;
@@ -17,15 +18,17 @@ export const StepperWithRange: React.FC<Props> = ({
   id,
   label,
   value,
-  min = Number.MIN_SAFE_INTEGER,
-  max = Number.MAX_SAFE_INTEGER,
+  min = 0,
+  max = 1000000,
   step = 1,
+  roundValue = 1,
   onChange,
-  debounceMs = 150,
+  debounceMs = 300,
   withRange,
 }) => {
   const clamp = (v: number) => Math.min(max, Math.max(min, v));
-  const roundToStep = (v: number) => Math.round(v / step) * step;
+  const roundToStep = (v: number, roundValue: number) =>
+    Math.round(v / roundValue) * roundValue;
 
   const [local, setLocal] = useState<string>(String(value));
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -48,7 +51,7 @@ export const StepperWithRange: React.FC<Props> = ({
   }, []);
 
   const commitValue = (raw: number) => {
-    const normalized = clamp(roundToStep(raw));
+    const normalized = clamp(roundToStep(raw, roundValue));
     if (normalized !== value) onChange(normalized);
     setLocal(String(normalized));
   };
@@ -63,12 +66,12 @@ export const StepperWithRange: React.FC<Props> = ({
   };
 
   const inc = () => {
-    const next = clamp(roundToStep(value + step));
+    const next = clamp(roundToStep(value + step, step));
     if (next !== value) onChange(next);
   };
 
   const dec = () => {
-    const next = clamp(roundToStep(value - step));
+    const next = clamp(roundToStep(value - step, step));
     if (next !== value) onChange(next);
   };
 
@@ -146,7 +149,7 @@ export const StepperWithRange: React.FC<Props> = ({
   const rangeValue = (() => {
     const parsed = Number(local);
     if (!Number.isNaN(parsed)) {
-      return String(clamp(roundToStep(parsed)));
+      return String(clamp(roundToStep(parsed, roundValue)));
     }
     return String(value);
   })();
@@ -162,7 +165,7 @@ export const StepperWithRange: React.FC<Props> = ({
             type="button"
             onClick={dec}
             aria-label={`Zmniejsz ${label ?? "wartość"}`}
-            className="px-5 py-2 bg-primary hover:bg-primary-hover disabled:opacity-70 font-extrabold rounded-l-lg cursor-pointer"
+            className="px-5 py-2 bg-primary hover:bg-primary-hover disabled:opacity-70 font-extrabold  text-2xl rounded-l-lg cursor-pointer disabled:cursor-not-allowed"
             disabled={value - step < min}
           >
             −
@@ -170,7 +173,7 @@ export const StepperWithRange: React.FC<Props> = ({
 
           <input
             id={id}
-            className="no-spinner text-xl text-center focus:outline-none flex-1 flex  min-w-[100px]"
+            className="no-spinner text-xl text-center focus:outline-none flex-1 flex  min-w-[100px] max-w-[100px]"
             type="number"
             inputMode="numeric"
             value={local}
@@ -190,7 +193,7 @@ export const StepperWithRange: React.FC<Props> = ({
             type="button"
             onClick={inc}
             aria-label={`Zwiększ ${label ?? "wartość"}`}
-            className="px-5 py-2 bg-primary hover:bg-primary-hover disabled:opacity-70 font-extrabold rounded-r-lg cursor-pointer"
+            className="px-5 py-2 bg-primary hover:bg-primary-hover disabled:opacity-70 font-extrabold text-2xl  rounded-r-lg cursor-pointer disabled:cursor-not-allowed"
             disabled={value + step > max}
           >
             +

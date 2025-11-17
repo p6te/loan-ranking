@@ -37,45 +37,6 @@ export function useOffers() {
     return Array.from(new Set(offers.flatMap((o) => o.tags))).sort();
   }, [offers]);
 
-  const limits = useMemo(() => {
-    if (!offers || offers.length === 0) {
-      return {
-        AMOUNT_MIN: 100,
-        AMOUNT_MAX: 100000,
-        PERIOD_MIN: 1,
-        PERIOD_MAX: 60,
-      };
-    }
-
-    const init = {
-      AMOUNT_MIN: Infinity,
-      AMOUNT_MAX: -Infinity,
-      PERIOD_MIN: Infinity,
-      PERIOD_MAX: -Infinity,
-    };
-
-    const reduced = offers.reduce((acc, o) => {
-      const minA = o.minAmount;
-      const maxA = o.maxAmount;
-      const minP = o.minPeriod;
-      const maxP = o.maxPeriod;
-
-      if (minA < acc.AMOUNT_MIN) acc.AMOUNT_MIN = minA;
-      if (maxA > acc.AMOUNT_MAX) acc.AMOUNT_MAX = maxA;
-      if (minP < acc.PERIOD_MIN) acc.PERIOD_MIN = minP;
-      if (maxP > acc.PERIOD_MAX) acc.PERIOD_MAX = maxP;
-
-      return acc;
-    }, init);
-
-    return {
-      AMOUNT_MIN: reduced.AMOUNT_MIN,
-      AMOUNT_MAX: reduced.AMOUNT_MAX,
-      PERIOD_MIN: reduced.PERIOD_MIN,
-      PERIOD_MAX: reduced.PERIOD_MAX,
-    };
-  }, [offers]);
-
   const filteredOffers = useMemo(() => {
     let res = offers.filter(
       (o) =>
@@ -127,6 +88,5 @@ export function useOffers() {
     setSortBy,
     tags,
     setTags,
-    limits,
   };
 }

@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import "@testing-library/jest-dom";
 
-vi.mock("./StepperWithRange", () => {
+vi.mock("../components/StepperWithRange", () => {
   return {
     StepperWithRange: (props: any) => {
       return (
@@ -19,21 +19,12 @@ vi.mock("./StepperWithRange", () => {
   };
 });
 
-// Import the component under test after mocking
-import { Filters } from "./Filters";
+import { Filters } from "../components/Filters";
 
 describe("Filters component", () => {
-  // Properly typed mock callbacks
   let setAmount: (n: number) => void;
   let setPeriod: (n: number) => void;
   let setTags: (tags: string[]) => void;
-
-  const limits = {
-    AMOUNT_MIN: 100,
-    AMOUNT_MAX: 10000,
-    PERIOD_MIN: 1,
-    PERIOD_MAX: 60,
-  };
 
   beforeEach(() => {
     setAmount = vi.fn() as unknown as (n: number) => void;
@@ -50,7 +41,6 @@ describe("Filters component", () => {
       setAmount,
       setPeriod,
       setTags,
-      limits,
       ...overrideProps,
     };
 
@@ -62,7 +52,6 @@ describe("Filters component", () => {
 
     expect(screen.getByText(/Dopasuj najlepszą ofertę/i)).toBeInTheDocument();
 
-    // all tags rendered
     ["Online", "0% RRSO", "Szybka decyzja"].forEach((t) => {
       expect(
         screen.getByRole("button", { name: new RegExp(t, "i") }),
@@ -79,7 +68,6 @@ describe("Filters component", () => {
       setAmount,
       setPeriod,
       setTags,
-      limits,
     };
 
     render(<Filters {...props} />);
@@ -102,7 +90,6 @@ describe("Filters component", () => {
       setAmount,
       setPeriod,
       setTags,
-      limits,
     };
 
     render(<Filters {...props} />);
@@ -119,12 +106,14 @@ describe("Filters component", () => {
 
     const stepperAmountBtn = screen.getByTestId("stepper-btn-amount");
     fireEvent.click(stepperAmountBtn);
+
     expect(setAmount).toHaveBeenCalledTimes(1);
-    expect(setAmount).toHaveBeenCalledWith(limits.AMOUNT_MIN);
+    expect(setAmount).toHaveBeenCalledWith(200);
 
     const stepperPeriodBtn = screen.getByTestId("stepper-btn-period");
     fireEvent.click(stepperPeriodBtn);
+
     expect(setPeriod).toHaveBeenCalledTimes(1);
-    expect(setPeriod).toHaveBeenCalledWith(limits.PERIOD_MIN);
+    expect(setPeriod).toHaveBeenCalledWith(1);
   });
 });

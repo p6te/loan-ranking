@@ -5,10 +5,12 @@ import ArrowIcon from "../assets/icons/arrow.svg?react";
 import OfferDetails from "./OfferDetaiils";
 import { screens, useMediaQuery } from "../hooks/useMediaQuery";
 
-export const OfferCard: React.FC<{ offer: Offer; number: number }> = ({
-  offer,
-  number,
-}) => {
+interface Props {
+  offer: Offer;
+  number: number;
+}
+
+export const OfferCard = ({ offer, number }: Props) => {
   const isSm = useMediaQuery(screens.sm);
   const [open, setOpen] = React.useState(false);
 
@@ -34,7 +36,7 @@ export const OfferCard: React.FC<{ offer: Offer; number: number }> = ({
             <img
               src={offer.logo}
               alt={offer.name}
-              className="w-auto h-full object-contain min-h-20 "
+              className="w-auto h-full object-contain min-h-20 mb-1 md:mb-0  ml-3"
             />
           </div>
           {!isSm && (
@@ -119,6 +121,18 @@ export const OfferCard: React.FC<{ offer: Offer; number: number }> = ({
           isSm={isSm}
         />
         <OfferDetails name="Ocena" value={`${offer.rating}/100`} />
+      </div>
+      <div className="border-t border-primary flex justify-center items-center py-3 gap-2  flex-wrap">
+        {offer.tags.map((t) => {
+          return (
+            <span
+              key={t}
+              className="px-3 py-1 rounded-full text-sm bg-background border border-primary-hover "
+            >
+              {t}
+            </span>
+          );
+        })}
       </div>
       <div
         className="border-t border-primary flex justify-center items-center pt-3 gap-2 hover:cursor-pointer"

@@ -7,7 +7,7 @@ vi.mock("../assets/icons/arrow.svg?react", () => {
   };
 });
 
-vi.mock("./OfferDetaiils", () => {
+vi.mock("../components/OfferDetaiils", () => {
   return {
     default: (props: any) => (
       <div data-testid={`offer-detail-${props.name}`}>{props.value}</div>
@@ -28,7 +28,7 @@ vi.mock("../lib/logEvent", () => {
   };
 });
 
-import { OfferCard } from "./OfferCard";
+import { OfferCard } from "../components/OfferCard";
 import type { Offer } from "../types";
 import { logEvent } from "../lib/logEvent";
 

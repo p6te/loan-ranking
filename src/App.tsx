@@ -2,6 +2,9 @@ import { useOffers } from "./hooks/useOffers";
 import { OfferCard } from "./components/OfferCard";
 import { Filters } from "./components/Filters";
 import { Sorter } from "./components/Sorter";
+import SkeletonLoadingOffer from "./components/OfferLoadingSkeleton";
+import { mockOffers } from "./assets/mockData";
+import { ErrorState } from "./components/ErrorState";
 
 export default function App() {
   const {
@@ -18,7 +21,6 @@ export default function App() {
     tags,
     setTags,
     allTags,
-    limits,
   } = useOffers();
 
   return (
@@ -36,39 +38,36 @@ export default function App() {
           setTags={setTags}
           period={period}
           setPeriod={setPeriod}
-          limits={limits}
+          loading={loading}
         />
 
-        <div className="flex flex-col md:flex-row md:items-center mb-4  gap-3 justify-between mx-3">
-          <div>
-            <span className="text mr-2">Liczba znalezionych ofert:</span>
-            <strong className=" text-xl font-bold">
-              {filteredOffers.length}
-            </strong>
-          </div>
-          <Sorter setSort={setSortBy} sort={sortBy} />
-        </div>
+        <Sorter
+          setSort={setSortBy}
+          sort={sortBy}
+          error={error}
+          loading={loading}
+          offersNumber={filteredOffers.length}
+        />
 
-        {loading && (
-          <div className="space-y-3">
-            <div className="h-20 bg-white animate-pulse rounded-xl border" />
-          </div>
-        )}
-        {error && (
-          <div className="text-center py-10">
-            <p className="text-red-600 mb-3">{error}</p>
-            <button
-              onClick={load}
-              className="px-4 py-2 bg-blue-600 text-white rounded"
-            >
-              Retry
-            </button>
-          </div>
-        )}
+        {loading &&
+          mockOffers.map((_o, index) => (
+            <SkeletonLoadingOffer number={index + 1} />
+          ))}
+
+        {error && <ErrorState load={load} />}
         {!loading &&
           !error &&
-          filteredOffers.map((o, index) => (
-            <OfferCard key={o.id} number={index + 1} offer={o} />
+          (filteredOffers.length === 0 ? (
+            <div className="flex flex-col justify-center items-center w-full mt-16 text-2xl text-center">
+              <div>Nie znaleziono pasujących ofert.</div>
+              <div className="font-bold">
+                Dopasuj filtry i spróbuj ponownine.
+              </div>
+            </div>
+          ) : (
+            filteredOffers.map((o, index) => (
+              <OfferCard key={o.id} number={index + 1} offer={o} />
+            ))
           ))}
       </div>
     </div>

@@ -99,7 +99,7 @@ describe("Mini ranking - e2e", () => {
 });
 
 describe("Mini ranking – error state (fetch fails)", () => {
-  it("shows Retry button when fetchOffers fails", () => {
+  it("Show button 'Pobierz oferty' in case of fetch error", () => {
     cy.visit("/", {
       onBeforeLoad(win) {
         (win as any).Math.random = () => 0.05;
@@ -109,6 +109,6 @@ describe("Mini ranking – error state (fetch fails)", () => {
       },
     });
 
-    cy.contains("Retry").should("be.visible");
+    cy.contains("Pobierz oferty").should("be.visible");
   });
 });
