@@ -83,11 +83,9 @@ npm run lint
 
 - Walidacja kwoty, poza wymaganiami, została ustawiona jest na maksymalnie **1 000 000** (kwota), aby wyeliminować skrajne, nierealistyczne wartości.
 
-- Początkowy pomysł pobierania limitów (min/max) bezpośrednio z listy ofert został porzucony, ponieważ kolidował z wymaganiami zadania (walidacja stałych limitów).
-
 - do filtrów zostało dodane opóźnienie, by nie regaowały na każdy ruch użytkownia (szczególnie przy użyciu slidera)
 
-### ranking ofert
+### Ranking ofert
 
 - Oferty są sortowane zgodnie z wymaganiami zadania oraz wybranymi filtrami.
 - Dodano przycisk **„Pokaż szczegóły”**, który rozwija kartę z dodatkowymi informacjami o ofercie.
